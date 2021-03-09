@@ -1,0 +1,17 @@
+<div class="content">
+    <app-header dataQa="address book"
+                primaryText="A-Book"
+                subText="It is not a book, is your Address Book"
+    ></app-header>
+
+    <div class="body">
+      <div *ngFor="let contact of contactList; index as i" data-qa="contact list section" class="contact-list">
+        <app-contact 
+            [index]="i"
+            [contactName]="contact.name" 
+            [contactSurname]="contact.surname" 
+            [contactPhoneNumber]="contact.phoneNumber" 
+        ></app-contact>
+      </div>
+    </div>
+</div>
