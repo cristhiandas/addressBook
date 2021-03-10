@@ -6,9 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./contact.component.sass']
 })
 export class ContactComponent implements OnInit {
-  @Input() contactName: string;
-  @Input() contactSurname: string;
-  @Input() contactPhoneNumber: string;
+  @Input() contact: any;
   @Input() index: number;
 
   constructor() { }

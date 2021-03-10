@@ -1,3 +1,5 @@
+import { FormControl, FormGroup } from "@angular/forms";
+
 export function getElementText(nativeElement: HTMLElement, dataQa: string): string {
     const foundElement = getElement(nativeElement, dataQa);
     return cleanString(foundElement.textContent);
@@ -6,6 +8,26 @@ export function getElementText(nativeElement: HTMLElement, dataQa: string): stri
 export function getElement(nativeElement: HTMLElement, dataQa: string): HTMLElement {
   const foundElement = nativeElement.querySelector(`[data-qa="${dataQa}"]`) as HTMLElement;
   return existingElement(foundElement, dataQa) as HTMLElement;
+}
+
+export function clickOnElement(nativeElement: HTMLElement, dataQa: string) {
+  getElement(nativeElement, dataQa).click();
+}
+
+export function inputTextOnElement(nativeElement: HTMLElement, dataQa: string, inputText: string) {
+  const element = <HTMLInputElement>getElement(nativeElement, dataQa);
+  element.value = inputText;
+  element.dispatchEvent(new Event('input'));
+  element.dispatchEvent(new Event('keyup'));
+  return element;
+}
+
+export function buildContactForm(name: string, surname: string, phoneNumber: string): FormGroup {
+  return new FormGroup({
+    name: new FormControl(name),
+    surname: new FormControl(surname),
+    phoneNumber: new FormControl(phoneNumber)
+  });
 }
 
 //This checks that the element exist before returning it, this way 

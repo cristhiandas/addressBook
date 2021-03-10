@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { getElement, getElementText } from 'src/app/utils/testing';
+import { buildContactForm, getElement, getElementText } from 'src/app/utils/testing';
 
 import { ContactComponent } from './contact.component';
 
@@ -35,9 +35,7 @@ describe('ContactComponent', () => {
   });
 
   function setContact(index: number, name: string, surname: string, phoneNumber: string) {
-    component.contactName = name;
-    component.contactSurname = surname;
-    component.contactPhoneNumber = phoneNumber;
+    component.contact = buildContactForm(name, surname, phoneNumber).value;
     component.index = index;
   }
 });

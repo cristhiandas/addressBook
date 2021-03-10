@@ -5,13 +5,52 @@
     ></app-header>
 
     <div class="body">
-      <div *ngFor="let contact of contactList; index as i" data-qa="contact list section" class="contact-list">
-        <app-contact 
-            [index]="i"
-            [contactName]="contact.name" 
-            [contactSurname]="contact.surname" 
-            [contactPhoneNumber]="contact.phoneNumber" 
-        ></app-contact>
-      </div>
+      <form [formGroup]="contactListForm">
+        <div formArrayName="contactList">
+          <button type="button" class="btn_primary" data-qa="add new contact button" (click)="setNewContactMode()" *ngIf="!getNewContactMode()">Add a new contact</button>
+          <div [formGroup]="contactForm" data-qa="add new contact section" *ngIf="getNewContactMode()">
+            <label for="newContactName">First name</label>
+            <input formControlName="name" id="newContactName" data-qa="new contact first name" type="text">
+            <label for="newContactSurame">Last name</label>
+            <input formControlName="surname" id="newContactSurame" data-qa="new contact surname" type="text">
+            <label for="newContactPhoneNumber">Phone number</label>
+            <input formControlName="phoneNumber" id="newContactPhoneNumber" data-qa="new contact phone number" type="text">
+            <button type="button" class="btn_primary" data-qa="confirm new contact button" (click)="updateNewContact()">Confirm new contact</button>
+          </div>
+          <div data-qa="sort contact list section">
+            <button type="button" class="btn_primary" data-qa="sort by name button" (click)="sortByName()">Sort by name</button>
+            <button type="button" class="btn_primary" data-qa="sort by surname button" (click)="sortBySurname()">Sort by surname</button>
+          </div>
+          <div data-qa="filtering section">
+            <label for="filterByName">Filter by name</label>
+            <input id="filterByName" data-qa="filer by name" type="text" (keyup)="filterNames($event)">
+          </div>
+          <div *ngIf="!filterMode">
+            <div *ngFor="let contact of getContactListArray().value; index as i" data-qa="contact list section" class="contact-list">
+              <div>
+                <app-contact 
+                  [index]="i"
+                  [contact]="contact"
+              ></app-contact>
+              <button type="button" class="btn_secondary" attr.data-qa="delete contact {{i}} button" (click)="deleteContact(i)">Delete contact</button>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="filterMode">
+            <div *ngFor="let contact of filteredValues; index as i" data-qa="contact list section" class="contact-list">
+              <div>
+                <app-contact 
+                  [index]="i"
+                  [contact]="contact"
+              ></app-contact>
+              <button type="button" class="btn_secondary" attr.data-qa="delete contact {{i}} button" (click)="deleteContact(i)">Delete contact</button>
+              </div>
+            </div>
+          </div>
+          
+          <p *ngIf="getContactListArray().length < 1" data-qa="empty list message">You have 0 contacts :(</p>
+        </div>
+      </form>
     </div>
 </div>
