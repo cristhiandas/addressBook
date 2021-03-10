@@ -72,9 +72,11 @@ export class AddressBookComponent implements OnInit {
   }
 
   filterNames(event){
-    if(event.target.value) {
+    const inputValue = event.target.value.toLowerCase();
+    if(inputValue) {
       this.filteredValues = this.getContactListArray().value
-      .filter(contact => contact.name.toLowerCase().startsWith(event.target.value.toLowerCase()));
+      .filter(contact => 
+        contact.name.toLowerCase().startsWith(inputValue) | contact.surname.toLowerCase().startsWith(inputValue));
       this.filterMode = true;
     } else {
       this.filterMode = false;

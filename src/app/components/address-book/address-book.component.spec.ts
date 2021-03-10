@@ -125,7 +125,7 @@ describe('AddressBookComponent', () => {
     done();
   });
 
-  it('should filter the contacts by name', async (done) => {
+  it('should filter the contacts by name and surname', async (done) => {
     await fixture.whenStable();
     fixture.autoDetectChanges();
     inputTextOnElement(nativeElement, 'filer by name', 'Y');
@@ -143,6 +143,11 @@ describe('AddressBookComponent', () => {
     expect(getElementText(nativeElement, 'contact 0 name')).toBe("Rodrigo");
     expect(getElementText(nativeElement, 'contact 0 surname')).toBe("Diaz De Vivar");
     expect(getElementText(nativeElement, 'contact 0 phone number')).toBe("07000000000");
+
+    inputTextOnElement(nativeElement, 'filer by name', 'Po');
+    expect(getElementText(nativeElement, 'contact 0 name')).toBe("Marco");
+    expect(getElementText(nativeElement, 'contact 0 surname')).toBe("Polo");
+    expect(getElementText(nativeElement, 'contact 0 phone number')).toBe("07222222222");
     done();
   });
 });
